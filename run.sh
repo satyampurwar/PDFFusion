@@ -18,12 +18,14 @@ clear_directories() {
         rm -rf "$INPUT_DIR"
     fi
     mkdir -p "$INPUT_DIR"
+    touch "$INPUT_DIR/.gitkeep"
     
     # Remove and recreate output directory
     if [ -d "$OUTPUT_DIR" ]; then
         rm -rf "$OUTPUT_DIR"
     fi
     mkdir -p "$OUTPUT_DIR"
+    touch "$OUTPUT_DIR/.gitkeep"
     
     echo "Directories cleared successfully."
 }
