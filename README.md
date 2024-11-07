@@ -28,10 +28,14 @@ PDFFusion is a user-friendly web application designed to simplify the process of
    ./run.sh
    ```
 
-4. **Access PDFFusion**
-   Open your browser and visit `http://127.0.0.1:5000`
+4. **Accessing PDFFusion**
+   Launch your web browser and navigate to `http://127.0.0.1:5000`
    
-   **Note**: `index.html` is created using Generative AI. This is manually tested and working fine.
+   **Note**: The `index.html` file was generated using Generative AI. It has been manually tested and is functioning correctly.
+
+   **Future Enhancements**:
+   1. Implement working and tested drag-and-drop feature for file uploading
+   2. Enable file merging in the user-specified order
 
 ## How to Use
 
