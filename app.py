@@ -1,5 +1,5 @@
 """
-PDFFusion - Streamlined PDF Merging Tool
+PDFFusion - Streamlined PDF Merging Application
 
 Author: Satyam Purwar
 
