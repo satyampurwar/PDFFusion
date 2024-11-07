@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDFFusion - PDF Merger</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --background-color: #f5f7fa;
+            --text-color: #2c3e50;
+            --border-color: #bdc3c7;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 2.5rem;
+        }
+        .upload-area {
+            border: 2px dashed var(--primary-color);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        .upload-area:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        .file-input {
+            display: none;
+        }
+        .file-label {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+        }
+        .file-label:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(52, 152, 219, 0.3);
+        }
+        #file-list {
+            list-style-type: none;
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+        }
+        #file-list li {
+            background-color: rgba(52, 152, 219, 0.05);
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        #file-list li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .remove-file {
+            color: var(--accent-color);
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .remove-file:hover {
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+            margin: 0 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        #upload-btn {
+            background-color: var(--secondary-color);
+            color: #ffffff;
+        }
+        #upload-btn:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(46, 204, 113, 0.3);
+        }
+        #process-btn {
+            background-color: var(--primary-color);
+            color: #ffffff;
+        }
+        #process-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(52, 152, 219, 0.3);
+        }
+        #download-btn {
+            background-color: var(--accent-color);
+            color: #ffffff;
+        }
+        #download-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(231, 76, 60, 0.3);
+        }
+        .btn:disabled {
+            background-color: var(--border-color);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(52, 152, 219, 0.1);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #loading-text {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PDFFusion</h1>
+        <form id="upload-form" method="post" enctype="multipart/form-data">
+            <div class="upload-area">
+                <input type="file" id="file-input" class="file-input" name="files[]" multiple accept=".pdf">
+                <label for="file-input" class="file-label">Choose PDF Files</label>
+                <p>or drag and drop PDF files here</p>
+            </div>
+            <ul id="file-list"></ul>
+            <div class="btn-group">
+                <button type="button" id="upload-btn" class="btn" disabled>Upload</button>
+                <button type="button" id="process-btn" class="btn" disabled>Merge PDFs</button>
+                <button type="button" id="download-btn" class="btn" disabled>Download</button>
+            </div>
+        </form>
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <p id="loading-text">Processing files, please wait...</p>
+        </div>
+    </div>
+    <script>
+        const fileInput = document.getElementById('file-input');
+        const fileList = document.getElementById('file-list');
+        const uploadBtn = document.getElementById('upload-btn');
+        const processBtn = document.getElementById('process-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const uploadForm = document.getElementById('upload-form');
+        const loading = document.getElementById('loading');
+        const loadingText = document.getElementById('loading-text');
+        const uploadArea = document.querySelector('.upload-area');
+        let selectedFiles = new Set();
+
+        fileInput.addEventListener('change', updateFileList);
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = 'rgba(52, 152, 219, 0.1)';
+        });
+
+        uploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = '';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = '';
+            const droppedFiles = Array.from(e.dataTransfer.files).filter(file => file.type === 'application/pdf');
+            addFiles(droppedFiles);
+        });
+
+        function addFiles(files) {
+            for (const file of files) {
+                if (!selectedFiles.has(file.name)) {
+                    selectedFiles.add(file.name);
+                    const li = createFileListItem(file.name);
+                    fileList.appendChild(li);
+                }
+            }
+            updateButtonStates();
+        }
+
+        function createFileListItem(fileName) {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span>${fileName}</span>
+                <span class="remove-file" data-filename="${fileName}">&times;</span>
+            `;
+            li.querySelector('.remove-file').addEventListener('click', removeFile);
+            return li;
+        }
+
+        function removeFile(e) {
+            const fileName = e.target.getAttribute('data-filename');
+            selectedFiles.delete(fileName);
+            e.target.parentElement.remove();
+            updateButtonStates();
+        }
+
+        function updateFileList() {
+            const newFiles = Array.from(fileInput.files).filter(file => !selectedFiles.has(file.name));
+            addFiles(newFiles);
+        }
+
+        function updateButtonStates() {
+            uploadBtn.disabled = selectedFiles.size === 0;
+            processBtn.disabled = selectedFiles.size === 0;
+        }
+
+        uploadBtn.addEventListener('click', async () => {
+            if (selectedFiles.size > 0) {
+                const formData = new FormData();
+                selectedFiles.forEach(fileName => {
+                    const file = Array.from(fileInput.files).find(f => f.name === fileName);
+                    if (file) formData.append('files[]', file);
+                });
+
+                try {
+                    const response = await fetch('/', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        loadingText.textContent = 'Files uploaded successfully. You can now merge the PDFs.';
+                        processBtn.disabled = false;
+                    } else {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || 'Server responded with an error');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    loadingText.textContent = 'An error occurred while uploading the files.';
+                }
+            }
+        });
+
+        processBtn.addEventListener('click', async () => {
+            loading.style.display = 'block';
+            processBtn.disabled = true;
+
+            try {
+                const response = await fetch('/process', {
+                    method: 'POST'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    downloadBtn.disabled = false;
+                    loadingText.textContent = 'Files processed successfully. Click Download to get the merged PDF.';
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Server responded with an error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                loadingText.textContent = 'An error occurred while processing files.';
+            } finally {
+                loading.style.display = 'none';
+            }
+        });
+
+        downloadBtn.addEventListener('click', async () => {
+            const response = await fetch('/process', {
+                method: 'POST'
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                window.location.href = `/download/${data.filename}`;
+
+                // Reset the UI after download
+                fileList.innerHTML = '';
+                selectedFiles.clear();
+                fileInput.value = '';
+                updateButtonStates();
+                downloadBtn.disabled = true;
+            }
+        });
+    </script>
+</body>
+</html>
