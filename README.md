@@ -30,6 +30,7 @@ PDFFusion is a user-friendly web application designed to simplify the process of
 
 4. **Access PDFFusion**
    Open your browser and visit `http://127.0.0.1:5000`
+   
    **Note**: `index.html` is created using Generative AI. This is manually tested and working fine.
 
 ## How to Use
