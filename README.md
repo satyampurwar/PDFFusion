@@ -21,3 +21,39 @@ PDFFusion is a user-friendly web application designed to simplify the process of
    pip install -r deploy/conda/requirements.txt
    conda env export --name pdfmerge > deploy/conda/linux_py312.yml
    ```
+
+3. **Launch Application**
+   ```bash
+   chmod +x run.sh
+   ./run.sh
+   ```
+
+4. **Access PDFFusion**
+   Open your browser and visit `http://127.0.0.1:5000`
+   **Note**: `index.html` is created using Generative AI. This is manually tested and working fine.
+
+## How to Use
+
+1. Click "Upload" to select PDF files
+2. Press "Merge" to combine selected files
+3. Download your newly merged PDF
+
+## Key Features
+
+- **Intuitive Web Interface**: Designed for ease of use
+- **Multi-File Support**: Merge several PDFs simultaneously
+- **Instant Download**: Get your merged PDF immediately after processing
+
+## Contribute
+
+We welcome contributions! Fork the repository and submit a pull request to help improve PDFFusion.
+
+## License
+
+PDFFusion is released under the MIT License. See [LICENSE](LICENSE) for details.
+
+## Support
+
+For issues or feature requests, please open an issue in this repository.
+
+Simplify your PDF merging process with PDFFusion today!
