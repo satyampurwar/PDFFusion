@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDFFusion - PDF Merger</title>
+    <title>PDFFusion - PDF Merger and Image Converter</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -14,11 +15,13 @@
             --text-color: #2c3e50;
             --border-color: #bdc3c7;
         }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--background-color);
@@ -30,6 +33,7 @@
             min-height: 100vh;
             padding: 20px;
         }
+
         .container {
             max-width: 800px;
             width: 100%;
@@ -39,6 +43,7 @@
             padding: 40px;
             transition: all 0.3s ease;
         }
+
         h1 {
             text-align: center;
             color: var(--primary-color);
@@ -46,6 +51,7 @@
             font-weight: 600;
             font-size: 2.5rem;
         }
+
         .upload-area {
             border: 2px dashed var(--primary-color);
             border-radius: 12px;
@@ -55,12 +61,15 @@
             transition: all 0.3s ease;
             background-color: rgba(52, 152, 219, 0.05);
         }
+
         .upload-area:hover {
             background-color: rgba(52, 152, 219, 0.1);
         }
+
         .file-input {
             display: none;
         }
+
         .file-label {
             display: inline-block;
             padding: 12px 24px;
@@ -74,11 +83,13 @@
             letter-spacing: 1px;
             box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
         }
+
         .file-label:hover {
             background-color: #2980b9;
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(52, 152, 219, 0.3);
         }
+
         #file-list {
             list-style-type: none;
             margin-top: 20px;
@@ -88,6 +99,7 @@
             border-radius: 8px;
             padding: 10px;
         }
+
         #file-list li {
             background-color: rgba(52, 152, 219, 0.05);
             padding: 10px 15px;
@@ -98,10 +110,12 @@
             align-items: center;
             transition: all 0.3s ease;
         }
+
         #file-list li:hover {
             transform: translateX(5px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         .remove-file {
             color: var(--accent-color);
             cursor: pointer;
@@ -109,14 +123,17 @@
             border-radius: 50%;
             transition: all 0.3s ease;
         }
+
         .remove-file:hover {
             background-color: rgba(231, 76, 60, 0.1);
         }
+
         .btn-group {
             display: flex;
             justify-content: space-between;
             margin-top: 30px;
         }
+
         .btn {
             padding: 12px 24px;
             border: none;
@@ -130,44 +147,53 @@
             letter-spacing: 1px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
         #upload-btn {
             background-color: var(--secondary-color);
             color: #ffffff;
         }
+
         #upload-btn:hover {
             background-color: #27ae60;
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(46, 204, 113, 0.3);
         }
+
         #process-btn {
             background-color: var(--primary-color);
             color: #ffffff;
         }
+
         #process-btn:hover {
             background-color: #2980b9;
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(52, 152, 219, 0.3);
         }
+
         #download-btn {
             background-color: var(--accent-color);
             color: #ffffff;
         }
+
         #download-btn:hover {
             background-color: #c0392b;
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(231, 76, 60, 0.3);
         }
+
         .btn:disabled {
             background-color: var(--border-color);
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
+
         .loading {
             display: none;
             text-align: center;
             margin-top: 30px;
         }
+
         .loading-spinner {
             border: 4px solid rgba(52, 152, 219, 0.1);
             border-top: 4px solid var(--primary-color);
@@ -177,29 +203,38 @@
             animation: spin 1s linear infinite;
             margin: 0 auto 20px;
         }
+
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
+
         #loading-text {
             color: var(--primary-color);
             font-weight: 500;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>PDFFusion</h1>
         <form id="upload-form" method="post" enctype="multipart/form-data">
             <div class="upload-area">
-                <input type="file" id="file-input" class="file-input" name="files[]" multiple accept=".pdf">
-                <label for="file-input" class="file-label">Choose PDF Files</label>
-                <p>or drag and drop PDF files here</p>
+                <input type="file" id="file-input" class="file-input" name="files[]" multiple
+                    accept=".pdf,.png,.jpg,.jpeg,.gif,.bmp">
+                <label for="file-input" class="file-label">Choose Files</label>
+                <p>or drag and drop PDF and image files here</p>
             </div>
             <ul id="file-list"></ul>
             <div class="btn-group">
                 <button type="button" id="upload-btn" class="btn" disabled>Upload</button>
-                <button type="button" id="process-btn" class="btn" disabled>Merge PDFs</button>
+                <button type="button" id="process-btn" class="btn" disabled>Process Files</button>
                 <button type="button" id="download-btn" class="btn" disabled>Download</button>
             </div>
         </form>
@@ -235,7 +270,8 @@
         uploadArea.addEventListener('drop', (e) => {
             e.preventDefault();
             uploadArea.style.backgroundColor = '';
-            const droppedFiles = Array.from(e.dataTransfer.files).filter(file => file.type === 'application/pdf');
+            const droppedFiles = Array.from(e.dataTransfer.files).filter(file =>
+                file.type === 'application/pdf' || file.type.startsWith('image/'));
             addFiles(droppedFiles);
         });
 
@@ -284,16 +320,14 @@
                     const file = Array.from(fileInput.files).find(f => f.name === fileName);
                     if (file) formData.append('files[]', file);
                 });
-
                 try {
                     const response = await fetch('/', {
                         method: 'POST',
                         body: formData
                     });
-
                     if (response.ok) {
                         const data = await response.json();
-                        loadingText.textContent = 'Files uploaded successfully. You can now merge the PDFs.';
+                        loadingText.textContent = 'Files uploaded successfully. You can now process the files.';
                         processBtn.disabled = false;
                     } else {
                         const errorData = await response.json();
@@ -309,16 +343,14 @@
         processBtn.addEventListener('click', async () => {
             loading.style.display = 'block';
             processBtn.disabled = true;
-
             try {
                 const response = await fetch('/process', {
                     method: 'POST'
                 });
-
                 if (response.ok) {
                     const data = await response.json();
                     downloadBtn.disabled = false;
-                    loadingText.textContent = 'Files processed successfully. Click Download to get the merged PDF.';
+                    loadingText.textContent = 'Files processed successfully. Images converted to PDF and all PDFs merged. Click Download to get the result.';
                 } else {
                     const errorData = await response.json();
                     throw new Error(errorData.error || 'Server responded with an error');
@@ -335,11 +367,9 @@
             const response = await fetch('/process', {
                 method: 'POST'
             });
-
             if (response.ok) {
                 const data = await response.json();
                 window.location.href = `/download/${data.filename}`;
-
                 // Reset the UI after download
                 fileList.innerHTML = '';
                 selectedFiles.clear();
@@ -350,4 +380,5 @@
         });
     </script>
 </body>
+
 </html>
