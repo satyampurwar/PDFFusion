@@ -52,10 +52,11 @@ PDFFusion is a sophisticated web application designed to simplify the process of
    **Note**: The `index.html` file was generated using Generative AI and has been manually tested for functionality.
 
 ## Usage Instructions
-
 1. Click "Upload" to select PDF files and/or image files (PNG, JPG, JPEG, GIF, BMP)
 2. Click "Process Files" to convert images to PDF and merge all PDFs
 3. Click "Download" to retrieve the newly merged PDF
+
+![Screenshot 2024-11-08 193439](https://github.com/user-attachments/assets/141be210-8fb4-46a2-8208-037697290bf1)
 
 ## Key Features
 
