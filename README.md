@@ -28,8 +28,7 @@ PDFFusion is a user-friendly web application designed to simplify the process of
    ./run.sh
    ```
 
-4. **Accessing PDFFusion**
-   Launch your web browser and navigate to `http://127.0.0.1:5000`
+4. **Accessing PDFFusion**: Launch your web browser and navigate to `http://127.0.0.1:5000`
    
    **Note**: The `index.html` file was generated using Generative AI. It has been manually tested and is functioning correctly.
 
