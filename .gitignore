@@ -1,2 +1,12 @@
 # Ignore pdf files anywhere
 *.pdf
+# Ignore pycache folder anywhere
+__pycache__/
+# Ignore pytestcache folder in root location
+/.pytest_cache/
+# Ignore pyc extension files anywhere
+*.pyc
+# Ignore setuptools distribution folder in root location
+/dist/
+# Ignore python egg metadata in src folder, regenerated from source files by setuptools
+/src/*.egg-info
