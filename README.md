@@ -73,8 +73,6 @@ PDFFusion is a user-friendly web application designed to simplify the process of
 ## Future Enhancements
 
 1. Implement working and tested drag-and-drop feature for file uploading
-2. Enable file merging in the user-specified order
-3. Add options for image conversion settings (e.g., resolution, compression)
 
 ## Contribute
 
