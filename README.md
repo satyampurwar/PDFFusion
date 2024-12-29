@@ -81,4 +81,4 @@ PDFFusion is distributed under the MIT License. See [LICENSE](LICENSE) for full 
 
 For technical issues or feature requests, please open an issue in this repository.
 
-Enhance your document management workflow with PDFFusion today!
+Enhance your document management workflow with PDFFusion today! 
